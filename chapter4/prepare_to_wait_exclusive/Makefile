@@ -1,0 +1,11 @@
+ifneq ($(KERNELRELEASE),)
+obj-m += prepare_to_wait_exclusive.o 
+else
+PWD  := $(shell pwd)
+KVER ?= $(shell uname -r)
+KDIR := /lib/modules/$(KVER)/build
+all:
+	$(MAKE) -C $(KDIR) M=$(PWD) 
+clean:
+	rm -rf  *.o *.mod.c *.ko *.symvers *~ *.order *.markers
+endif
